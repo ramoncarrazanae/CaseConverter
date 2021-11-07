@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class = "title">Case Converter</div>
+    <textarea id = "text-area"></textarea>
+    <button id = "upper-case">Upper Case</button>
+    <button id = "lower-case">Lower Case</button>
+    <button id = "proper-case">Proper Case</button>
+    <button id = "sentence-case">Sentence Case</button>
+    <button id = "save-text-file">Save Text File</button>
+    <script>
+        let UpperButton = document.getElementById("upper-case");
+        let LowerButton = document.getElementById("lower-case");
+        let ProperCase = document.getElementById("proper-case");
+        let SentenceCase = document.getElementById("sentence-case");
+        let textArea = document.getElementById("text-area");
+        let saveText = document.getElementById("save-text-file");
+        UpperButton.addEventListener("click", function (){
+            textArea.value = textArea.value.toUpperCase();
+        });
+        LowerButton.addEventListener("click", function (){
+            textArea.value = textArea.value.toLowerCase();
+        });
+        ProperCase.addEventListener("click", function (){
+            textArea.value = properCase(textArea.value);
+        });
+        SentenceCase.addEventListener("click", function (){
+            textArea.value = sentenceCase(textArea.value) ;
+        });
+        saveText.addEventListener("click", function (){
+            download("text.txt", textArea.value);
+        }, false);
+
+        function properCase(string){
+            let sentence = string.toLowerCase().split(' ');
+
+            for(let i = 0; i < sentence.length; i++){
+                sentence[i] = sentence[i].charAt(0).toUpperCase() + sentence[i].slice(1);
+            }
+                return sentence.join(' ');
+        }
+        function  sentenceCase(string){
+            let sentences = string.toLowerCase().split(". ")
+            for (let i = 0; i < sentences.length ; i++){
+                sentences[i] = sentences[i].charAt(0).toUpperCase() + sentences[i].slice(1);
+            }
+            return sentences.join(". ");
+        }
+
+        function download(filename, text) {
+            let element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+    </script>
+</body>
+</html>
